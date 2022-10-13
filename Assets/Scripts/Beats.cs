@@ -64,22 +64,22 @@ public class Beats : MonoBehaviour
         }
     }
 
-    // Name: GetBeat function
+    // Name: GetBeatAt function
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Returns front value of beat list
-    // Precondition: None
-    // Postcondition: front value of beat list
-    public float GetBeat()
+    // Description: Returns beat at specified list index
+    // Precondition: valid index
+    // Postcondition: beat value
+    public float GetBeatAt(int index)
     {
-        if (beats.Count > 0)
+        if ((index > -1) && (index < beats.Count())) // Check for valid index
         {
-            return (beats[0]);
+            return (beats[index]);
         }
         else
         {
-            Debug.LogError("Beats list is empty!");
-            return (0);
+            Debug.LogError("Invalid index!");
+            return (-1);
         }
     }
 
@@ -102,11 +102,11 @@ public class Beats : MonoBehaviour
     // Name: GetBeatsLeft function
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Returns how many beats are left in the list
+    // Description: Returns how many beats are in the list
     // Preconditon: None
-    // Postcondition: beats left in list
-    public int GetBeatsLeft()
+    // Postcondition: num of beats in list
+    public int GetTotalBeats()
     {
-        return (beats.Count);
+        return (beats.Count());
     }
 }

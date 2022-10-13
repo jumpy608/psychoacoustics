@@ -21,6 +21,7 @@ public class Conductor : MonoBehaviour
     private float songPosition = 0f; // Time in dspTime since song has started
     private float secPerBeat = 0f;
     private float songPositionInBeats = 0f;
+    int nextBeatIndex = 0; // Index of next beat to be played
 
     // Name: Start function
     // Programmer: Konrad Kahnert
@@ -77,22 +78,65 @@ public class Conductor : MonoBehaviour
     // Name: CheckBeats coroutine
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Checks start of beat list and if the beat time matches the current song position, flash and remove the start of beat list
+    // Description: Checks beat time of next note to be played and if the beat time matches the current song position, flash and increment next beat index
     IEnumerator CheckBeats()
     {
-        while (Beats.instance.GetBeatsLeft() > 0)
+        while (true)
         {
             // Get song position
             songPosition = (float)AudioSettings.dspTime - songStartDspTime;
             songPositionInBeats = songPosition / secPerBeat;
 
-            if (songPositionInBeats >= Beats.instance.GetBeat() + beatOffset) // Check if beat time has been reached
+            if (nextBeatIndex < Beats.instance.GetTotalBeats()) // If there are still notes left to play
             {
-                flasher.GetComponent<Flasher>().Flash(); // Flash
-                Beats.instance.RemoveBeat(); // Remove start of beat list
+                if (songPositionInBeats >= Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset) // Check if beat time has been reached
+                {
+                    flasher.GetComponent<Flasher>().Flash(); // Flash
+                    nextBeatIndex++;
+                }
             }
 
             yield return null;
         }
+    }
+
+    // Name: GetSongPositionInBeats function
+    // Programmer: Konrad Kahnert
+    // Date: 10/10/2022
+    // Description: Returns songPositionInBeats
+    // Postcondition: songPositionInBeats
+    public float GetSongPositionInBeats()
+    {
+        return (songPositionInBeats);
+    }
+
+    // Name: GetSongPosition function
+    // Programmer: Konrad Kahnert
+    // Date: 10/10/2022
+    // Description: Returns songPosition
+    // Postcondition: songPosition
+    public float GetSongPosition()
+    {
+        return (songPosition);
+    }
+
+    // Name: GetSecPerBeat function
+    // Programmer: Konrad Kahnert
+    // Date: 10/10/2022
+    // Description: Returns secPerBeat
+    // Postcondition: secPerBeat
+    public float GetSecPerBeat()
+    {
+        return (secPerBeat);
+    }
+
+    // Name: GetBeatOffset
+    // Programmer: Konrad Kahnert
+    // Date: 10/10/2022
+    // Description: Returns beat offset
+    // Postcondition: beat offset
+    public float GetBeatOffset()
+    {
+        return (beatOffset);
     }
 }
