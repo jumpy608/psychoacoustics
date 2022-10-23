@@ -11,17 +11,23 @@ public class Conductor : MonoBehaviour
 {
     public static Conductor instance;
     [SerializeField] TextAsset beatMap; // Text file containing beatmap
-    [SerializeField] GameObject flasher;
 
     // Timing variables
     [SerializeField] float bpm = 0f;
-    [SerializeField] float songOffset = 0f; // How long to wait in sec to start the song
-    [SerializeField] float beatOffset = 0f; // How many beats to delay the beat timings
+    [SerializeField] float levelStartOffset = 0f; // How long to wait in sec to start the level
+    [SerializeField] float beatsShownInAdvance = 3f; // How many beats to spawn a note in advance of it reaching the hit circle
+    [SerializeField] float songOffset = 0f; // How long in sec to pre-emptivley play song in order to account for silence at beginning of song
     private float songStartDspTime = 0f;
     private float songPosition = 0f; // Time in dspTime since song has started
     private float secPerBeat = 0f;
     private float songPositionInBeats = 0f;
     int nextBeatIndex = 0; // Index of next beat to be played
+    float beatOffset = 4f; // How long to delay beat timings. Song must play this many "empty" beats so first beat doesn't instantly spawn on hit circle.
+
+    // Note circle variables
+    [SerializeField] GameObject noteCircle;
+    float noteSpawnX = 0;
+    float noteSpawnY = 6;
 
     // Name: Start function
     // Programmer: Konrad Kahnert
@@ -50,18 +56,39 @@ public class Conductor : MonoBehaviour
         }
 
         Beats.instance.LoadBeatMap(beatMap);
+        StartCoroutine(WaitThenSpawnBeats());
+    }
+
+    // Name: WaitThenSpawnBeats coroutine
+    // Programmer: Konrad Kahnert
+    // Date: 10/23/2022
+    // Description: Wait for a bit, then start spawning beats
+
+    IEnumerator WaitThenSpawnBeats()
+    {
+        float currentDspTime = (float)AudioSettings.dspTime;
+        float offsetDspTime = currentDspTime + levelStartOffset;
+
+        // Wait
+        while (currentDspTime < offsetDspTime)
+        {
+            currentDspTime = (float)AudioSettings.dspTime;
+            yield return null;
+        }
+
+        songStartDspTime = (float)AudioSettings.dspTime; // Set song start time
+        StartCoroutine(CheckBeats()); // Start consuming beats
         StartCoroutine(WaitThenPlaySong());
     }
 
     // Name: WaitThenPlaySong coroutine
     // Programmer: Konrad Kahnert
-    // Date: 9/23/2022
-    // Description: Plays the song after a delay specified by songOffset.
-
+    // Date: 10/23/2022
+    // Description: Delays the playing of the song so it starts right when the first beat happens.
     IEnumerator WaitThenPlaySong()
     {
         float currentDspTime = (float)AudioSettings.dspTime;
-        float offsetDspTime = currentDspTime + songOffset;
+        float offsetDspTime = currentDspTime + beatOffset * secPerBeat - songOffset;
 
         // Wait
         while (currentDspTime < offsetDspTime)
@@ -71,8 +98,18 @@ public class Conductor : MonoBehaviour
         }
 
         AudioManager.instance.PlaySound("Ana Ng"); // Play song
-        songStartDspTime = (float)AudioSettings.dspTime; // Set song start time
-        StartCoroutine(CheckBeats()); // Start consuming beats
+    }
+
+    // Name: SpawnNoteCircle function
+    // Programmer: Konrad Kahnert
+    // Date: 10/21/2022
+    // Description: Spawns a note circle and sets its target beat.
+    // Precondition: The beat when the note circle should align with the hit circle.
+    void SpawnNoteCircle(float targetBeat)
+    {
+        GameObject noteInst = Instantiate(noteCircle);
+        noteInst.transform.position = new Vector2(noteSpawnX, noteSpawnY);
+        noteInst.GetComponent<NoteCircle>().SetTargetBeat(targetBeat);
     }
 
     // Name: CheckBeats coroutine
@@ -89,9 +126,9 @@ public class Conductor : MonoBehaviour
 
             if (nextBeatIndex < Beats.instance.GetTotalBeats()) // If there are still notes left to play
             {
-                if (songPositionInBeats >= Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset) // Check if beat time has been reached
+                if (songPositionInBeats + beatsShownInAdvance >= Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset) // Check if beat time has been reached
                 {
-                    flasher.GetComponent<Flasher>().Flash(); // Flash
+                    SpawnNoteCircle(Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset);
                     nextBeatIndex++;
                 }
             }
@@ -138,5 +175,15 @@ public class Conductor : MonoBehaviour
     public float GetBeatOffset()
     {
         return (beatOffset);
+    }
+
+    // Name: GetBeatsShownInAdvance
+    // Programmer: Konrad Kahnert
+    // Date: 10/21/2022
+    // Description: Returns beatsShownInAdvance
+    // Postcondition: beatsShownInAdvance
+    public float GetBeatsShownInAdvance()
+    {
+        return (beatsShownInAdvance);
     }
 }

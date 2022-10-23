@@ -780,10 +780,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beatMap: {fileID: 4900000, guid: 136769f3b7a510446a2431a019ce540b, type: 3}
-  flasher: {fileID: 950286312}
   bpm: 133
-  songOffset: 2
-  beatOffset: 1.25
+  levelStartOffset: 2
+  beatsShownInAdvance: 3
+  songOffset: 0.75
+  noteCircle: {fileID: 48541753037799669, guid: 68728ac51abf341428a8238ea65fc3ce, type: 3}
 --- !u!114 &658229891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,7 +848,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 227, y: 11}
+  m_AnchoredPosition: {x: 769.30786, y: -316.77383}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &691840813
@@ -874,28 +875,14 @@ GameObject:
   m_Component:
   - component: {fileID: 950286315}
   - component: {fileID: 950286314}
-  - component: {fileID: 950286313}
+  - component: {fileID: 950286316}
   m_Layer: 0
-  m_Name: Flasher
+  m_Name: Hit Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &950286313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950286312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b52a38986e07d264f876ffe52337ac96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color1: {r: 0, g: 0, b: 1, a: 1}
-  color2: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &950286314
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -956,13 +943,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950286312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.03737221}
+  m_LocalPosition: {x: 0, y: -3.5, z: 0.03737221}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &950286316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950286312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adec9fcba19260845b769ef722095fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1289617574
 GameObject:
   m_ObjectHideFlags: 0
