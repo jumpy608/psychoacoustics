@@ -15,7 +15,7 @@ public class Conductor : MonoBehaviour
     // Timing variables
     [SerializeField] float bpm = 0f;
     [SerializeField] float levelStartOffset = 0f; // How long to wait in sec to start the level
-    [SerializeField] float beatsShownInAdvance = 3f; // How many beats to spawn a note in advance of it reaching the hit circle
+    [SerializeField] float beatsShownInAdvance = 1f; // How many beats to spawn a note in advance of it reaching the hit circle
     [SerializeField] float songOffset = 0f; // How long in sec to pre-emptivley play song in order to account for silence at beginning of song
     private float songStartDspTime = 0f;
     private float songPosition = 0f; // Time in dspTime since song has started
@@ -26,8 +26,9 @@ public class Conductor : MonoBehaviour
 
     // Note circle variables
     [SerializeField] GameObject noteCircle;
+    [SerializeField] GameObject noteRing;
     float noteSpawnX = 0;
-    float noteSpawnY = 6;
+    float noteSpawnY = -3.5f;
 
     // Name: Start function
     // Programmer: Konrad Kahnert
@@ -112,6 +113,13 @@ public class Conductor : MonoBehaviour
         noteInst.GetComponent<NoteCircle>().SetTargetBeat(targetBeat);
     }
 
+    void SpawnNoteRing(float targetBeat)
+    {
+        GameObject ringInst = Instantiate(noteRing);
+        ringInst.transform.position = new Vector2(noteSpawnX, noteSpawnY);
+        ringInst.GetComponent<NoteRing>().SetTargetBeat(targetBeat);
+    }
+
     // Name: CheckBeats coroutine
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
@@ -128,7 +136,7 @@ public class Conductor : MonoBehaviour
             {
                 if (songPositionInBeats + beatsShownInAdvance >= Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset) // Check if beat time has been reached
                 {
-                    SpawnNoteCircle(Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset);
+                    SpawnNoteRing(Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset);
                     nextBeatIndex++;
                 }
             }

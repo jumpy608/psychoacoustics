@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+// Name: HitCircle Class
+// Programmer: Konrad Kahnert
+// Date: 11/19/2022
+// Description: Draws a black ring around the hit circle
+
 using UnityEngine;
 
 public class HitCircle : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] DrawRing drawRing;
+    float ringWidth = 0.1f;
+    float ringRad = 0.5f;
+
+    // Name: Start Function
+    // Programmer: Konrad Kahnert
+    // Date: 11/19/2022
+    // Description: Draws the ring
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        drawRing.Draw(ringWidth, ringRad);
     }
 }

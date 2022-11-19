@@ -8,10 +8,15 @@ using UnityEngine;
 
 public class NoteCircle : MonoBehaviour
 {
+    Conductor cond;
     Vector2 startPos;
     Vector2 targetPos;
     float targetBeat;
 
+    // Name: SetTargetBeat Function
+    // Programmer: Konrad Kahnert
+    // Date: 11/19/2022
+    // Description: Sets the beat that this note circle should target
     public void SetTargetBeat(float x)
     {
         targetBeat = x;
@@ -22,13 +27,12 @@ public class NoteCircle : MonoBehaviour
     {
         startPos = transform.position;
         targetPos = new Vector2(0, -3.5f);
+        cond = Conductor.instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Conductor cond = Conductor.instance;
-
         float t = (cond.GetBeatsShownInAdvance() - (targetBeat - cond.GetSongPositionInBeats())) / cond.GetBeatsShownInAdvance();
         transform.position = Vector2.Lerp(startPos, targetPos, t);
 
