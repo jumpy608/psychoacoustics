@@ -15,7 +15,7 @@ public class Conductor : MonoBehaviour
     // Timing variables
     [SerializeField] float bpm = 0f;
     [SerializeField] float levelStartOffset = 0f; // How long to wait in sec to start the level
-    [SerializeField] float beatsShownInAdvance = 1f; // How many beats to spawn a note in advance of it reaching the hit circle
+    [SerializeField] float beatsShownInAdvance = 3f; // How many beats to spawn a note in advance of it reaching the hit circle
     [SerializeField] float songOffset = 0f; // How long in sec to pre-emptivley play song in order to account for silence at beginning of song
     private float songStartDspTime = 0f;
     private float songPosition = 0f; // Time in dspTime since song has started

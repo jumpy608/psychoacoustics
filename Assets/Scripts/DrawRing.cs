@@ -4,11 +4,10 @@
 // Description: Draws a ring around the object this script is attached to using LineRenderer
 
 using UnityEngine;
-[RequireComponent(typeof(LineRenderer))]
 
 public class DrawRing : MonoBehaviour
 {
-    LineRenderer lineRenderer;
+    [SerializeField] LineRenderer lineRenderer;
     int lineCount = 60;       //more lines = smoother ring
 
     private void Start()

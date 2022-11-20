@@ -785,7 +785,7 @@ MonoBehaviour:
   beatMap: {fileID: 4900000, guid: 136769f3b7a510446a2431a019ce540b, type: 3}
   bpm: 133
   levelStartOffset: 2
-  beatsShownInAdvance: 3
+  beatsShownInAdvance: 1.5
   songOffset: 0.75
   noteCircle: {fileID: 48541753037799669, guid: 68728ac51abf341428a8238ea65fc3ce, type: 3}
   noteRing: {fileID: 7624474547317430363, guid: 5a4a7aa73cb00ab4c86edcbe46d5189c, type: 3}
@@ -1444,6 +1444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e4ac7c9fd89ba84ea4bb06a0dad67dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 1909568112}
 --- !u!120 &1909568112
 LineRenderer:
   m_ObjectHideFlags: 0

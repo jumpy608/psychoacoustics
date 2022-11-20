@@ -14,7 +14,6 @@ public class Beats : MonoBehaviour
     private List<float> beats = new List<float>();
     float tickLength = 0.25f; // How many beats there are between each character read in
 
-
     // Name: Start function
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
