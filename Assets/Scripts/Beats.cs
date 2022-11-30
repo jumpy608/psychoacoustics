@@ -12,7 +12,6 @@ public class Beats : MonoBehaviour
 {
     public static Beats instance;
     private List<Beat> beats = new List<Beat>();
-    float tickLength = 0.25f; // How many beats there are between each character read in
 
     // Name: Start function
     // Programmer: Konrad Kahnert
@@ -54,7 +53,7 @@ public class Beats : MonoBehaviour
                 {
                     // Create beat and add to beat list
                     int hitCircleNo = beatMapText[i] - '0'; // Convert char to int
-                    Beat beat = new Beat(hitCircleNo, i * tickLength);
+                    Beat beat = new Beat(hitCircleNo, i * Controller.instance.tickLength);
                     beats.Add(beat);
                 }
             }

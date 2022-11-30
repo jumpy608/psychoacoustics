@@ -13,10 +13,6 @@ public class Conductor : MonoBehaviour
     [SerializeField] TextAsset beatMap; // Text file containing beatmap
 
     // Timing variables
-    [SerializeField] float bpm = 0f;
-    [SerializeField] float levelStartOffset = 0f; // How long to wait in sec to start the level
-    [SerializeField] float beatsShownInAdvance = 3f; // How many beats to spawn a note in advance of it reaching the hit circle
-    [SerializeField] float songOffset = 0f; // How long in sec to pre-emptivley play song in order to account for silence at beginning of song
     private float songStartDspTime = 0f;
     private float songPosition = 0f; // Time in dspTime since song has started
     private float secPerBeat = 0f;
@@ -24,10 +20,10 @@ public class Conductor : MonoBehaviour
     int nextBeatIndex = 0; // Index of next beat to be played
     float beatOffset = 4f; // How long to delay beat timings. Song must play this many "empty" beats so first beat doesn't instantly spawn on hit circle.
 
-    // Note circle variables
+    // Note ring variables
     [SerializeField] GameObject[] hitCircles;
     [SerializeField] GameObject noteRing;
-    
+
     // Name: Start function
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
@@ -45,9 +41,9 @@ public class Conductor : MonoBehaviour
             return;
         }
 
-        if (bpm > 0)
+        if (Controller.instance.bpm > 0)
         {
-            secPerBeat = 60 / bpm;
+            secPerBeat = 60 / Controller.instance.bpm;
         }
         else
         {
@@ -66,7 +62,7 @@ public class Conductor : MonoBehaviour
     IEnumerator WaitThenSpawnBeats()
     {
         float currentDspTime = (float)AudioSettings.dspTime;
-        float offsetDspTime = currentDspTime + levelStartOffset;
+        float offsetDspTime = currentDspTime + Controller.instance.levelStartOffset;
 
         // Wait
         while (currentDspTime < offsetDspTime)
@@ -87,7 +83,7 @@ public class Conductor : MonoBehaviour
     IEnumerator WaitThenPlaySong()
     {
         float currentDspTime = (float)AudioSettings.dspTime;
-        float offsetDspTime = currentDspTime + beatOffset * secPerBeat - songOffset;
+        float offsetDspTime = currentDspTime + beatOffset * secPerBeat - Controller.instance.songOffset;
 
         // Wait
         while (currentDspTime < offsetDspTime)
@@ -101,10 +97,9 @@ public class Conductor : MonoBehaviour
 
     void SpawnNoteRing(int hitCircle, float targetBeat)
     {
-        GameObject ringInst = Instantiate(noteRing);
-        Debug.Log(hitCircle);
+        NoteRing ringInst = Instantiate(noteRing).GetComponent<NoteRing>();
         ringInst.transform.position = hitCircles[hitCircle - 1].transform.position;
-        ringInst.GetComponent<NoteRing>().SetTargetBeat(targetBeat);
+        ringInst.SetTargetBeat(targetBeat);
     }
 
     // Name: CheckBeats coroutine
@@ -123,7 +118,7 @@ public class Conductor : MonoBehaviour
             {
                 Beat beat = Beats.instance.GetBeatAt(nextBeatIndex);
 
-                if (songPositionInBeats + beatsShownInAdvance >= beat.time + beatOffset) // Check if beat time has been reached
+                if (songPositionInBeats + Controller.instance.beatsShownInAdvance >= beat.time + beatOffset) // Check if beat time has been reached
                 {
                     SpawnNoteRing(beat.hitCircleNo, beat.time + beatOffset);
                     nextBeatIndex++;
@@ -172,15 +167,5 @@ public class Conductor : MonoBehaviour
     public float GetBeatOffset()
     {
         return (beatOffset);
-    }
-
-    // Name: GetBeatsShownInAdvance
-    // Programmer: Konrad Kahnert
-    // Date: 10/21/2022
-    // Description: Returns beatsShownInAdvance
-    // Postcondition: beatsShownInAdvance
-    public float GetBeatsShownInAdvance()
-    {
-        return (beatsShownInAdvance);
     }
 }

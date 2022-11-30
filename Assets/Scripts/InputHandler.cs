@@ -8,7 +8,6 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     public static InputHandler instance;
-    [SerializeField] float leeway = 0f; // Max time difference between when player hits button and actual beat time of note to still register as a hit
     char[] keys = { '1', '2', '3', '4' }; // Keys corresponding to hit circles
     int targetBeatIndex = 0; // Index of beat that player is currently supposed to hit
     bool missed = false; // Whether the target beat has been missed or not

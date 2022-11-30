@@ -9,10 +9,9 @@ using UnityEngine;
 
 public class NoteRing : MonoBehaviour
 {
-    Conductor cond;
     DrawRing drawRing;
 
-    float startRad = 3f;
+    float startRad;
     float targetRad;
     float targetBeat;
     float ringWidth;
@@ -23,10 +22,10 @@ public class NoteRing : MonoBehaviour
     // Description: Initialization
     private void Start()
     {
-        cond = Conductor.instance;
         drawRing = GetComponent<DrawRing>();
-        targetRad = 0.5f;
-        ringWidth = 0.1f;
+        startRad = Controller.instance.ringStartRad;
+        targetRad = Controller.instance.ringEndRad;
+        ringWidth = Controller.instance.ringWidth;
     }
 
     // Name: SetTargetBeat Function
@@ -36,7 +35,7 @@ public class NoteRing : MonoBehaviour
     void Update()
     {
         // Interpolate radius of circle by how much time there is until the target beat
-        float t = (cond.GetBeatsShownInAdvance() - (targetBeat - cond.GetSongPositionInBeats())) / cond.GetBeatsShownInAdvance();
+        float t = (Controller.instance.beatsShownInAdvance - (targetBeat - Conductor.instance.GetSongPositionInBeats())) / Controller.instance.beatsShownInAdvance;
         float rad = Mathf.Lerp(startRad, targetRad, t);
         drawRing.Draw(ringWidth, rad);
 
@@ -55,5 +54,15 @@ public class NoteRing : MonoBehaviour
     public void SetTargetBeat(float x)
     {
         targetBeat = x;
+    }
+
+    public void SetTargetRad(float x)
+    {
+        targetRad = x;
+    }
+
+    public void SetRingWidth(float x)
+    {
+        ringWidth = x;
     }
 }
