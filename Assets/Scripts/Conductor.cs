@@ -25,11 +25,8 @@ public class Conductor : MonoBehaviour
     float beatOffset = 4f; // How long to delay beat timings. Song must play this many "empty" beats so first beat doesn't instantly spawn on hit circle.
 
     // Note circle variables
-    [SerializeField] GameObject noteCircle;
+    [SerializeField] GameObject[] hitCircles;
     [SerializeField] GameObject noteRing;
-
-    float[] noteRingXs = { -6, -2, 2, 6 };
-    float noteRingY = -3.5f;
     
     // Name: Start function
     // Programmer: Konrad Kahnert
@@ -105,7 +102,8 @@ public class Conductor : MonoBehaviour
     void SpawnNoteRing(int hitCircle, float targetBeat)
     {
         GameObject ringInst = Instantiate(noteRing);
-        ringInst.transform.position = new Vector2(noteRingXs[hitCircle - 1], noteRingY);
+        Debug.Log(hitCircle);
+        ringInst.transform.position = hitCircles[hitCircle - 1].transform.position;
         ringInst.GetComponent<NoteRing>().SetTargetBeat(targetBeat);
     }
 

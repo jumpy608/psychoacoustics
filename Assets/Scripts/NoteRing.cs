@@ -25,8 +25,8 @@ public class NoteRing : MonoBehaviour
     {
         cond = Conductor.instance;
         drawRing = GetComponent<DrawRing>();
-        targetRad = HitCircle.instance.GetRingRad();
-        ringWidth = HitCircle.instance.GetRingWidth();
+        targetRad = 0.5f;
+        ringWidth = 0.1f;
     }
 
     // Name: SetTargetBeat Function

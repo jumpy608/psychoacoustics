@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class HitCircle : MonoBehaviour
 {
-    public static HitCircle instance;
     [SerializeField] DrawRing drawRing;
     float ringWidth = 0.1f;
     float ringRad = 0.5f;
@@ -18,17 +17,6 @@ public class HitCircle : MonoBehaviour
     // Description: Initialization
     void Start()
     {
-        // Set instance
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this); // Destroy instance if another instance exists
-            return;
-        }
-
         drawRing.Draw(ringWidth, ringRad);
     }
 

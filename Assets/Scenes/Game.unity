@@ -652,7 +652,11 @@ MonoBehaviour:
   levelStartOffset: 2
   beatsShownInAdvance: 1.5
   songOffset: 0.75
-  noteCircle: {fileID: 48541753037799669, guid: 68728ac51abf341428a8238ea65fc3ce, type: 3}
+  hitCircles:
+  - {fileID: 1632822318}
+  - {fileID: 1109205019}
+  - {fileID: 950286312}
+  - {fileID: 1744934828}
   noteRing: {fileID: 7624474547317430363, guid: 5a4a7aa73cb00ab4c86edcbe46d5189c, type: 3}
 --- !u!114 &658229891
 MonoBehaviour:
@@ -808,6 +812,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitsText: {fileID: 610258483}
   missesText: {fileID: 416950719}
+--- !u!1 &950286312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8306308007895427694, guid: e38e918fbc9af2a458441ae498b53502, type: 3}
+  m_PrefabInstance: {fileID: 8306308008023088518}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1109205019 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8306308007895427694, guid: e38e918fbc9af2a458441ae498b53502, type: 3}
+  m_PrefabInstance: {fileID: 1384828900}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1275103846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1066,6 +1080,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e38e918fbc9af2a458441ae498b53502, type: 3}
+--- !u!1 &1632822318 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8306308007895427694, guid: e38e918fbc9af2a458441ae498b53502, type: 3}
+  m_PrefabInstance: {fileID: 2052047359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1744934828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8306308007895427694, guid: e38e918fbc9af2a458441ae498b53502, type: 3}
+  m_PrefabInstance: {fileID: 1275103846}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1867681694
 GameObject:
   m_ObjectHideFlags: 0
