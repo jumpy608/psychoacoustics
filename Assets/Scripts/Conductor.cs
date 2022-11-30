@@ -27,9 +27,10 @@ public class Conductor : MonoBehaviour
     // Note circle variables
     [SerializeField] GameObject noteCircle;
     [SerializeField] GameObject noteRing;
-    float noteSpawnX = 0;
-    float noteSpawnY = -3.5f;
 
+    float[] noteRingXs = { -6, -2, 2, 6 };
+    float noteRingY = -3.5f;
+    
     // Name: Start function
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
@@ -101,22 +102,10 @@ public class Conductor : MonoBehaviour
         AudioManager.instance.PlaySound("Ana Ng"); // Play song
     }
 
-    // Name: SpawnNoteCircle function
-    // Programmer: Konrad Kahnert
-    // Date: 10/21/2022
-    // Description: Spawns a note circle and sets its target beat.
-    // Precondition: The beat when the note circle should align with the hit circle.
-    void SpawnNoteCircle(float targetBeat)
-    {
-        GameObject noteInst = Instantiate(noteCircle);
-        noteInst.transform.position = new Vector2(noteSpawnX, noteSpawnY);
-        noteInst.GetComponent<NoteCircle>().SetTargetBeat(targetBeat);
-    }
-
-    void SpawnNoteRing(float targetBeat)
+    void SpawnNoteRing(int hitCircle, float targetBeat)
     {
         GameObject ringInst = Instantiate(noteRing);
-        ringInst.transform.position = new Vector2(noteSpawnX, noteSpawnY);
+        ringInst.transform.position = new Vector2(noteRingXs[hitCircle - 1], noteRingY);
         ringInst.GetComponent<NoteRing>().SetTargetBeat(targetBeat);
     }
 
@@ -134,19 +123,13 @@ public class Conductor : MonoBehaviour
 
             if (nextBeatIndex < Beats.instance.GetTotalBeats()) // If there are still notes left to play
             {
-                /*
-                for (int i = 0; i < 4; i++)
-                {
-                    float beat = Beats.instance.GetBeatAt(i, nextBeatIndex);
+                Beat beat = Beats.instance.GetBeatAt(nextBeatIndex);
 
-                    if (songPositionInBeats + beatsShownInAdvance >= beat + beatOffset) // Check if beat time has been reached
-                    {
-                        SpawnNoteRing(Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset);
-                        nextBeatIndex++;
-                    }
+                if (songPositionInBeats + beatsShownInAdvance >= beat.time + beatOffset) // Check if beat time has been reached
+                {
+                    SpawnNoteRing(beat.hitCircleNo, beat.time + beatOffset);
+                    nextBeatIndex++;
                 }
-                */
-                
             }
 
             yield return null;
