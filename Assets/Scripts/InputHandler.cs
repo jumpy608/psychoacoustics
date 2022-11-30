@@ -104,7 +104,6 @@ public class InputHandler : MonoBehaviour
     }
 
     */
-
     // Name: GetKeys Function
     // Programmer: Konrad Kahnert
     // Date: 11/29/2022
