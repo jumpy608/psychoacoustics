@@ -134,11 +134,13 @@ public class Conductor : MonoBehaviour
 
             if (nextBeatIndex < Beats.instance.GetTotalBeats()) // If there are still notes left to play
             {
+                /*
                 if (songPositionInBeats + beatsShownInAdvance >= Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset) // Check if beat time has been reached
                 {
                     SpawnNoteRing(Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset);
                     nextBeatIndex++;
                 }
+                */
             }
 
             yield return null;

@@ -11,7 +11,8 @@ using UnityEngine;
 public class Beats : MonoBehaviour
 {
     public static Beats instance;
-    private List<float> beats = new List<float>();
+    private List<List<float>> beats = new List<List<float>>(); // A list of lists to store beat info. Essentially a jagged array
+    int beatCount = 0;
     float tickLength = 0.25f; // How many beats there are between each character read in
 
     // Name: Start function
@@ -29,6 +30,12 @@ public class Beats : MonoBehaviour
         {
             Destroy(this); // Destroy instance if another instance exists
             return;
+        }
+
+        // Initialize beats list
+        for (int i = 0; i < 4; i++)
+        {
+            beats.Add(new List<float>());
         }
     }
 
@@ -48,13 +55,38 @@ public class Beats : MonoBehaviour
             beatMapText = beatMapText.Replace("|", string.Empty).Trim();
             beatMapText = String.Concat(beatMapText.Where(c => !Char.IsWhiteSpace(c)));
 
-            // Add beats
-            for (int i = 0; i < beatMapText.Length; i++) // Loop through text
+            char[] keys = { '1', '2', '3', '4' }; // Get key chars
+
+            for (int i = 0; i < beatMapText.Length; i++) // Loop through beat map text
             {
-                if (beatMapText[i] == 'x') // If note detected
+                for (int k = 0; k < keys.Length; k++) // Check character for match with a key
                 {
-                    beats.Add(i * tickLength); // Add time of note to beats
+                    if (beatMapText[i] == keys[k])
+                    {
+                        // Add beat to beat array
+                        beats[k].Add(i * tickLength);
+                        beatCount++;
+                        break;
+                    }
                 }
+            }
+
+            // Print beats to console
+            for (int i = 0; i < 4; i++)
+            {
+                string testString = "";
+                for (int j = 0; j < beats[i].Count; j++)
+                {
+                    if (j == 0)
+                    {
+                        testString = beats[i][j].ToString();
+                    }
+                    else
+                    {
+                        testString = testString + ", " + beats[i][j];
+                    }
+                }
+                Debug.Log(testString);
             }
         }
         else
@@ -66,14 +98,22 @@ public class Beats : MonoBehaviour
     // Name: GetBeatAt function
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Returns beat at specified list index
-    // Precondition: valid index
-    // Postcondition: beat value
-    public float GetBeatAt(int index)
+    // Description: Returns beat at specified location
+    // Arguments: row and column of array position
+    // Returns: beat value
+    public float GetBeatAt(int row, int col)
     {
-        if ((index > -1) && (index < beats.Count())) // Check for valid index
+        if ((row > -1) && (row < beats.Count()))
         {
-            return (beats[index]);
+            if ((col > -1) && (col < beats[row].Count()))
+            {
+                return (beats[row][col]);
+            }
+            else
+            {
+                Debug.LogError("Invalid index!");
+                return (-1);
+            }
         }
         else
         {
@@ -86,26 +126,25 @@ public class Beats : MonoBehaviour
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
     // Description: Removes node at front of beat list
-    public void RemoveBeat()
+    public void RemoveBeat(int row)
     {
         if (beats.Count > 0)
         {
-            beats.RemoveAt(0);
+            beats[row].RemoveAt(0);
         }
         else
         {
-            Debug.LogError("Beats list is empty!");
+            Debug.LogError("Beats row is empty!");
         }
     }
 
-    // Name: GetBeatsLeft function
+    // Name: GetTotalBeats function
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Returns how many beats are in the list
-    // Preconditon: None
-    // Postcondition: num of beats in list
+    // Description: Returns how many beats are in the array
+    // Returns: beatCount
     public int GetTotalBeats()
     {
-        return (beats.Count());
+        return (beatCount);
     }
 }

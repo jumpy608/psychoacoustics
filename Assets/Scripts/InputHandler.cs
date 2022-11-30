@@ -7,11 +7,27 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
+    public static InputHandler instance;
     [SerializeField] float leeway = 0f; // Max time difference between when player hits button and actual beat time of note to still register as a hit
+    char[] keys = { '1', '2', '3', '4' }; // Keys corresponding to hit circles
     int targetBeatIndex = 0; // Index of beat that player is currently supposed to hit
     bool missed = false; // Whether the target beat has been missed or not
 
+    private void Start()
+    {
+        // Set instance
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this); // Destroy instance if another instance exists
+            return;
+        }
+    }
 
+    /*
     // Name: CheckTiming Function
     // Programmer: Konrad Kahnert
     // Date: 10/11/2022
@@ -85,5 +101,17 @@ public class InputHandler : MonoBehaviour
         {
             CheckTiming();
         }
+    }
+
+    */
+
+    // Name: GetKeys Function
+    // Programmer: Konrad Kahnert
+    // Date: 11/29/2022
+    // Description: Returns char array containing input keys
+    // Returns: array of input keys
+    public char[] GetKeys()
+    {
+        return (keys);
     }
 }
