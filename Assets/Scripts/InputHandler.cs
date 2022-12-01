@@ -8,7 +8,7 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     public static InputHandler instance;
-    char[] keys = { '1', '2', '3', '4' }; // Keys corresponding to hit circles
+    KeyCode[] keys = { KeyCode.V, KeyCode.B, KeyCode.N, KeyCode.M }; // Keys corresponding to hit circles. Index in array == which hit circle it corresponds to
     int targetBeatIndex = 0; // Index of beat that player is currently supposed to hit
     bool missed = false; // Whether the target beat has been missed or not
 
@@ -26,29 +26,33 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    /*
     // Name: CheckTiming Function
     // Programmer: Konrad Kahnert
     // Date: 10/11/2022
     // Description: This function is called when the player hits the spacebar and does a check to see if the player hit or missed the current note.
-    void CheckTiming()
+    void CheckTiming(int keyNo)
     {
         if (targetBeatIndex < Beats.instance.GetTotalBeats()) // While there are still notes left to play
         {
             float songPosition = Conductor.instance.GetSongPosition();
             float secPerBeat = Conductor.instance.GetSecPerBeat();
-            float offset = Conductor.instance.GetBeatOffset() * secPerBeat;
-            float targetTime = Beats.instance.GetBeatAt(targetBeatIndex) * secPerBeat;
+            float offset = Controller.instance.beatOffset * secPerBeat;
+
+            Beat beat = Beats.instance.GetBeatAt(targetBeatIndex);
+            float targetTime = beat.time * secPerBeat; // What time the key should have been pressed
+            int targetHitCircle = beat.hitCircleNo; // Which key should have been pressed
 
             if (missed == false)
             {
-                if (Mathf.Abs(songPosition - (targetTime + offset)) <= leeway) // If difference between current time and time of note is within leeway
+                if ((Mathf.Abs(songPosition - (targetTime + offset)) <= Controller.instance.leeway) && (keyNo == targetHitCircle)) // If difference between current time and time of note is within leeway and correct key has been pressed
                 {
+                    // Hit
                     HitCounter.instance.IncHits();
                     targetBeatIndex++;
                 }
                 else
                 {
+                    // Miss
                     HitCounter.instance.IncMisses();
                     missed = true;
                 }
@@ -68,9 +72,9 @@ public class InputHandler : MonoBehaviour
             float songPosition = Conductor.instance.GetSongPosition();
             float secPerBeat = Conductor.instance.GetSecPerBeat();
 
-            float offset = Conductor.instance.GetBeatOffset() * secPerBeat;
-            float targetTime = Beats.instance.GetBeatAt(targetBeatIndex) * secPerBeat;
-            float missTime = targetTime + offset + leeway; // Time where the note will have been missed
+            float offset = Controller.instance.beatOffset * secPerBeat;
+            float targetTime = Beats.instance.GetBeatAt(targetBeatIndex).time * secPerBeat;
+            float missTime = targetTime + offset + Controller.instance.leeway; // Time where the note will have been missed
 
             if (songPosition > missTime) // Check if note has been missed
             {
@@ -96,20 +100,13 @@ public class InputHandler : MonoBehaviour
     {
         UpdateTargetBeat();
 
-        if (Input.GetKeyDown(KeyCode.Space)) // When space is pressed down
+        // Check for key press
+        for (int i = 0; i < 4; i++)
         {
-            CheckTiming();
+            if (Input.GetKeyDown(keys[i]))
+            {
+                CheckTiming(i + 1);
+            }
         }
-    }
-
-    */
-    // Name: GetKeys Function
-    // Programmer: Konrad Kahnert
-    // Date: 11/29/2022
-    // Description: Returns char array containing input keys
-    // Returns: array of input keys
-    public char[] GetKeys()
-    {
-        return (keys);
     }
 }

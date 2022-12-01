@@ -13,6 +13,7 @@ public class Controller : MonoBehaviour
     [SerializeField] public float beatsShownInAdvance = 1.5f; // How many beats to spawn a note in advance of it reaching the hit circle
     [SerializeField] public float songOffset = 0.75f; // How long in sec to pre-emptivley play song in order to account for silence at beginning of song
     [SerializeField] public float leeway = 0f; // Max time difference between when player hits button and actual beat time of note to still register as a hit
+    [SerializeField] public float beatOffset = 4f; // How long to delay beat timings. Song must play this many "empty" beats so first beat doesn't instantly spawn on hit circle.
 
     // Start is called before the first frame update
     void Start()

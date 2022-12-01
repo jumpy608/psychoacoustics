@@ -691,6 +691,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b3cf923a18d32747a7a89c1a5b55fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ringWidth: 0.1
+  ringStartRad: 3
+  ringEndRad: 0.5
+  tickLength: 0.25
+  bpm: 133
+  levelStartOffset: 2
+  beatsShownInAdvance: 1.5
+  songOffset: 0.75
+  leeway: 0.1
+  beatOffset: 4
 --- !u!1 &682986080
 GameObject:
   m_ObjectHideFlags: 0

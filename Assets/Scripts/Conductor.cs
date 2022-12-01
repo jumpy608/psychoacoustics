@@ -18,7 +18,6 @@ public class Conductor : MonoBehaviour
     private float secPerBeat = 0f;
     private float songPositionInBeats = 0f;
     int nextBeatIndex = 0; // Index of next beat to be played
-    float beatOffset = 4f; // How long to delay beat timings. Song must play this many "empty" beats so first beat doesn't instantly spawn on hit circle.
 
     // Note ring variables
     [SerializeField] GameObject[] hitCircles;
@@ -83,7 +82,7 @@ public class Conductor : MonoBehaviour
     IEnumerator WaitThenPlaySong()
     {
         float currentDspTime = (float)AudioSettings.dspTime;
-        float offsetDspTime = currentDspTime + beatOffset * secPerBeat - Controller.instance.songOffset;
+        float offsetDspTime = currentDspTime + Controller.instance.beatOffset * secPerBeat - Controller.instance.songOffset;
 
         // Wait
         while (currentDspTime < offsetDspTime)
@@ -118,9 +117,9 @@ public class Conductor : MonoBehaviour
             {
                 Beat beat = Beats.instance.GetBeatAt(nextBeatIndex);
 
-                if (songPositionInBeats + Controller.instance.beatsShownInAdvance >= beat.time + beatOffset) // Check if beat time has been reached
+                if (songPositionInBeats + Controller.instance.beatsShownInAdvance >= beat.time + Controller.instance.beatOffset) // Check if beat time has been reached
                 {
-                    SpawnNoteRing(beat.hitCircleNo, beat.time + beatOffset);
+                    SpawnNoteRing(beat.hitCircleNo, beat.time + Controller.instance.beatOffset);
                     nextBeatIndex++;
                 }
             }
@@ -157,15 +156,5 @@ public class Conductor : MonoBehaviour
     public float GetSecPerBeat()
     {
         return (secPerBeat);
-    }
-
-    // Name: GetBeatOffset
-    // Programmer: Konrad Kahnert
-    // Date: 10/10/2022
-    // Description: Returns beat offset
-    // Postcondition: beat offset
-    public float GetBeatOffset()
-    {
-        return (beatOffset);
     }
 }
