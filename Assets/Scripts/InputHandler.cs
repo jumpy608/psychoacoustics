@@ -29,7 +29,8 @@ public class InputHandler : MonoBehaviour
     // Name: CheckTiming Function
     // Programmer: Konrad Kahnert
     // Date: 10/11/2022
-    // Description: This function is called when the player hits the spacebar and does a check to see if the player hit or missed the current note.
+    // Description: This function is called when the player hits a key and does a check to see if the player hit or missed the current note.
+    // Arguments: Which hitcircle the player hit the key for
     void CheckTiming(int keyNo)
     {
         if (targetBeatIndex < Beats.instance.GetTotalBeats()) // While there are still notes left to play

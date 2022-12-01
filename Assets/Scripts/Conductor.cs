@@ -57,7 +57,6 @@ public class Conductor : MonoBehaviour
     // Programmer: Konrad Kahnert
     // Date: 10/23/2022
     // Description: Wait for a bit, then start spawning beats
-
     IEnumerator WaitThenSpawnBeats()
     {
         float currentDspTime = (float)AudioSettings.dspTime;
@@ -94,6 +93,11 @@ public class Conductor : MonoBehaviour
         AudioManager.instance.PlaySound("Ana Ng"); // Play song
     }
 
+    // Name: CheckBeats coroutine
+    // Programmer: Konrad Kahnert
+    // Date: 11/30/2022
+    // Description: Spawns note rings
+    // Arguments: hitCircle - which hit circle to spawn this ring over, targetBeat - when the note ring should overlap the hit circle
     void SpawnNoteRing(int hitCircle, float targetBeat)
     {
         NoteRing ringInst = Instantiate(noteRing).GetComponent<NoteRing>();
@@ -104,7 +108,7 @@ public class Conductor : MonoBehaviour
     // Name: CheckBeats coroutine
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Checks beat time of next note to be played and if the beat time matches the current song position, flash and increment next beat index
+    // Description: Checks song position to spawn note rings
     IEnumerator CheckBeats()
     {
         while (true)

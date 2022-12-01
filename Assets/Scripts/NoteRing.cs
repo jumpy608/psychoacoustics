@@ -55,14 +55,4 @@ public class NoteRing : MonoBehaviour
     {
         targetBeat = x;
     }
-
-    public void SetTargetRad(float x)
-    {
-        targetRad = x;
-    }
-
-    public void SetRingWidth(float x)
-    {
-        ringWidth = x;
-    }
 }

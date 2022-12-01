@@ -1,3 +1,8 @@
+// Name: Controller Class
+// Programmer: Konrad Kahnert
+// Date: 11/30/2022
+// Description: This class contains variables that are adjusted in the editor which modify gameplay.
+
 using UnityEngine;
 
 public class Controller : MonoBehaviour

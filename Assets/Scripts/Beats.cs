@@ -1,7 +1,7 @@
 // Name: Beats Class
 // Programmer: Konrad Kahnert
 // Date: 9/23/2022
-// Description: This class stores a list of beat timings. Each value in the list corresponds to when the note should be hit.
+// Description: This class stores a list of beat structs. Contains functionality for reading a text file and building a list of beats from it.
 
 using System.Collections.Generic;
 using System;
