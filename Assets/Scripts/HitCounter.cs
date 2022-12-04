@@ -32,24 +32,38 @@ public class HitCounter : MonoBehaviour
             return;
         }
     }
-
+    
     // Name: IncHits Function
-    // Programmer: Konrad Kahnert
-    // Date: 10/11/2022
-    // Description: Incrementsand updates text display for hits counter.
+    // Programmer: Konrad Kahnert, Maggie Swartz
+    // Date: 10/11/2022, Updated 12/4/2022
+    // Description: Increments and updates text display for hits counter. Updated to include a leading 0.
     public void IncHits()
     {
         hits++;
-        hitsText.text = hits.ToString();
+	    if (hits <= 9)
+	    {
+		    hitsText.text = "0" + hits.ToString();
+	    }
+	    else
+	    {
+		    hitsText.text = hits.ToString();
+	    }
     }
 
     // Name: IncMisses Function
-    // Programmer: Konrad Kahnert
-    // Date: 10/11/2022
-    // Description: Increments and updates text display for misses counter.
+    // Programmer: Konrad Kahnert, Maggie Swartz
+    // Date: 10/11/2022, Updated 12/4/2022
+    // Description: Increments and updates text display for misses counter. Updated to include a leading 0.
     public void IncMisses()
     {
         misses++;
-        missesText.text = misses.ToString();
+	    if (misses <= 9)
+	    {
+		    missesText.text = "0" + misses.ToString();
+	    }
+	    else
+	    {
+        	missesText.text = misses.ToString();
+	    }
     }
 }
