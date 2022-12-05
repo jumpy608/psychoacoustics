@@ -13,22 +13,15 @@ public class Conductor : MonoBehaviour
     [SerializeField] TextAsset beatMap; // Text file containing beatmap
 
     // Timing variables
-    [SerializeField] float bpm = 0f;
-    [SerializeField] float levelStartOffset = 0f; // How long to wait in sec to start the level
-    [SerializeField] float beatsShownInAdvance = 3f; // How many beats to spawn a note in advance of it reaching the hit circle
-    [SerializeField] float songOffset = 0f; // How long in sec to pre-emptivley play song in order to account for silence at beginning of song
     private float songStartDspTime = 0f;
     private float songPosition = 0f; // Time in dspTime since song has started
     private float secPerBeat = 0f;
     private float songPositionInBeats = 0f;
     int nextBeatIndex = 0; // Index of next beat to be played
-    float beatOffset = 4f; // How long to delay beat timings. Song must play this many "empty" beats so first beat doesn't instantly spawn on hit circle.
 
-    // Note circle variables
-    [SerializeField] GameObject noteCircle;
+    // Note ring variables
+    [SerializeField] GameObject[] hitCircles;
     [SerializeField] GameObject noteRing;
-    float noteSpawnX = 0;
-    float noteSpawnY = -3.5f;
 
     // Name: Start function
     // Programmer: Konrad Kahnert
@@ -47,9 +40,9 @@ public class Conductor : MonoBehaviour
             return;
         }
 
-        if (bpm > 0)
+        if (Controller.instance.bpm > 0)
         {
-            secPerBeat = 60 / bpm;
+            secPerBeat = 60 / Controller.instance.bpm;
         }
         else
         {
@@ -64,11 +57,10 @@ public class Conductor : MonoBehaviour
     // Programmer: Konrad Kahnert
     // Date: 10/23/2022
     // Description: Wait for a bit, then start spawning beats
-
     IEnumerator WaitThenSpawnBeats()
     {
         float currentDspTime = (float)AudioSettings.dspTime;
-        float offsetDspTime = currentDspTime + levelStartOffset;
+        float offsetDspTime = currentDspTime + Controller.instance.levelStartOffset;
 
         // Wait
         while (currentDspTime < offsetDspTime)
@@ -89,7 +81,7 @@ public class Conductor : MonoBehaviour
     IEnumerator WaitThenPlaySong()
     {
         float currentDspTime = (float)AudioSettings.dspTime;
-        float offsetDspTime = currentDspTime + beatOffset * secPerBeat - songOffset;
+        float offsetDspTime = currentDspTime + Controller.instance.beatOffset * secPerBeat - Controller.instance.songOffset;
 
         // Wait
         while (currentDspTime < offsetDspTime)
@@ -101,29 +93,22 @@ public class Conductor : MonoBehaviour
         AudioManager.instance.PlaySound("Ana Ng"); // Play song
     }
 
-    // Name: SpawnNoteCircle function
+    // Name: CheckBeats coroutine
     // Programmer: Konrad Kahnert
-    // Date: 10/21/2022
-    // Description: Spawns a note circle and sets its target beat.
-    // Precondition: The beat when the note circle should align with the hit circle.
-    void SpawnNoteCircle(float targetBeat)
+    // Date: 11/30/2022
+    // Description: Spawns note rings
+    // Arguments: hitCircle - which hit circle to spawn this ring over, targetBeat - when the note ring should overlap the hit circle
+    void SpawnNoteRing(int hitCircle, float targetBeat)
     {
-        GameObject noteInst = Instantiate(noteCircle);
-        noteInst.transform.position = new Vector2(noteSpawnX, noteSpawnY);
-        noteInst.GetComponent<NoteCircle>().SetTargetBeat(targetBeat);
-    }
-
-    void SpawnNoteRing(float targetBeat)
-    {
-        GameObject ringInst = Instantiate(noteRing);
-        ringInst.transform.position = new Vector2(noteSpawnX, noteSpawnY);
-        ringInst.GetComponent<NoteRing>().SetTargetBeat(targetBeat);
+        NoteRing ringInst = Instantiate(noteRing).GetComponent<NoteRing>();
+        ringInst.transform.position = hitCircles[hitCircle - 1].transform.position;
+        ringInst.SetTargetBeat(targetBeat);
     }
 
     // Name: CheckBeats coroutine
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Checks beat time of next note to be played and if the beat time matches the current song position, flash and increment next beat index
+    // Description: Checks song position to spawn note rings
     IEnumerator CheckBeats()
     {
         while (true)
@@ -134,9 +119,11 @@ public class Conductor : MonoBehaviour
 
             if (nextBeatIndex < Beats.instance.GetTotalBeats()) // If there are still notes left to play
             {
-                if (songPositionInBeats + beatsShownInAdvance >= Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset) // Check if beat time has been reached
+                Beat beat = Beats.instance.GetBeatAt(nextBeatIndex);
+
+                if (songPositionInBeats + Controller.instance.beatsShownInAdvance >= beat.time + Controller.instance.beatOffset) // Check if beat time has been reached
                 {
-                    SpawnNoteRing(Beats.instance.GetBeatAt(nextBeatIndex) + beatOffset);
+                    SpawnNoteRing(beat.hitCircleNo, beat.time + Controller.instance.beatOffset);
                     nextBeatIndex++;
                 }
             }
@@ -173,25 +160,5 @@ public class Conductor : MonoBehaviour
     public float GetSecPerBeat()
     {
         return (secPerBeat);
-    }
-
-    // Name: GetBeatOffset
-    // Programmer: Konrad Kahnert
-    // Date: 10/10/2022
-    // Description: Returns beat offset
-    // Postcondition: beat offset
-    public float GetBeatOffset()
-    {
-        return (beatOffset);
-    }
-
-    // Name: GetBeatsShownInAdvance
-    // Programmer: Konrad Kahnert
-    // Date: 10/21/2022
-    // Description: Returns beatsShownInAdvance
-    // Postcondition: beatsShownInAdvance
-    public float GetBeatsShownInAdvance()
-    {
-        return (beatsShownInAdvance);
     }
 }

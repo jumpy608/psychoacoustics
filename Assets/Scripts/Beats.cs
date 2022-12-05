@@ -1,7 +1,7 @@
 // Name: Beats Class
 // Programmer: Konrad Kahnert
 // Date: 9/23/2022
-// Description: This class stores a list of beat timings. Each value in the list corresponds to when the note should be hit.
+// Description: This class stores a list of beat structs. Contains functionality for reading a text file and building a list of beats from it.
 
 using System.Collections.Generic;
 using System;
@@ -11,8 +11,7 @@ using UnityEngine;
 public class Beats : MonoBehaviour
 {
     public static Beats instance;
-    private List<float> beats = new List<float>();
-    float tickLength = 0.25f; // How many beats there are between each character read in
+    private List<Beat> beats = new List<Beat>();
 
     // Name: Start function
     // Programmer: Konrad Kahnert
@@ -48,14 +47,31 @@ public class Beats : MonoBehaviour
             beatMapText = beatMapText.Replace("|", string.Empty).Trim();
             beatMapText = String.Concat(beatMapText.Where(c => !Char.IsWhiteSpace(c)));
 
-            // Add beats
-            for (int i = 0; i < beatMapText.Length; i++) // Loop through text
+            for (int i = 0; i < beatMapText.Length; i++) // Loop through beat map text
             {
-                if (beatMapText[i] == 'x') // If note detected
+                if ((beatMapText[i] == '1') || (beatMapText[i] == '2') || (beatMapText[i] == '3') || (beatMapText[i] == '4'))
                 {
-                    beats.Add(i * tickLength); // Add time of note to beats
+                    // Create beat and add to beat list
+                    int hitCircleNo = beatMapText[i] - '0'; // Convert char to int
+                    Beat beat = new Beat(hitCircleNo, i * Controller.instance.tickLength);
+                    beats.Add(beat);
                 }
             }
+
+            /*
+            // Print beats to console
+            string testString = "";
+
+            for (int i = 0; i < beats.Count; i++)
+            {
+                float time = beats[i].time;
+                int hitCircleNo = beats[i].hitCircleNo;
+
+                testString += "(" + hitCircleNo + "," + time + "), ";
+            }
+
+            Debug.Log(testString);
+            */
         }
         else
         {
@@ -66,46 +82,30 @@ public class Beats : MonoBehaviour
     // Name: GetBeatAt function
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Returns beat at specified list index
-    // Precondition: valid index
-    // Postcondition: beat value
-    public float GetBeatAt(int index)
+    // Description: Returns beat at specified location
+    // Arguments: row and column of array position
+    // Returns: beat value
+    public Beat GetBeatAt(int x)
     {
-        if ((index > -1) && (index < beats.Count())) // Check for valid index
+        if (x < beats.Count)
         {
-            return (beats[index]);
+            return (beats[x]);
         }
         else
         {
             Debug.LogError("Invalid index!");
-            return (-1);
+            Beat beat = new Beat(0, 0);
+            return (beat);
         }
     }
 
-    // Name: RemoveBeat function
+    // Name: GetTotalBeats function
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Removes node at front of beat list
-    public void RemoveBeat()
-    {
-        if (beats.Count > 0)
-        {
-            beats.RemoveAt(0);
-        }
-        else
-        {
-            Debug.LogError("Beats list is empty!");
-        }
-    }
-
-    // Name: GetBeatsLeft function
-    // Programmer: Konrad Kahnert
-    // Date: 9/23/2022
-    // Description: Returns how many beats are in the list
-    // Preconditon: None
-    // Postcondition: num of beats in list
+    // Description: Returns how many beats are in the array
+    // Returns: beatCount
     public int GetTotalBeats()
     {
-        return (beats.Count());
+        return (beats.Count);
     }
 }
