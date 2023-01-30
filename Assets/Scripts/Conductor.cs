@@ -11,6 +11,7 @@ public class Conductor : MonoBehaviour
 {
     public static Conductor instance;
     [SerializeField] TextAsset beatMap; // Text file containing beatmap
+    [SerializeField] GameObject restartButton;
 
     // Timing variables
     private float songStartDspTime = 0f;
@@ -126,6 +127,10 @@ public class Conductor : MonoBehaviour
                     SpawnNoteRing(beat.hitCircleNo, beat.time + Controller.instance.beatOffset);
                     nextBeatIndex++;
                 }
+            }
+            else
+            {
+                StopCoroutine(CheckBeats());
             }
 
             yield return null;
