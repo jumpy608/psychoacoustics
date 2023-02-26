@@ -221,7 +221,7 @@ RectTransform:
   - {fileID: 1736220310}
   - {fileID: 1700333439}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -311,7 +311,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 410101298}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 658229890}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: Begin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &410101298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,11 +725,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 658229888}
-  - component: {fileID: 658229890}
   - component: {fileID: 658229889}
-  - component: {fileID: 658229891}
+  - component: {fileID: 658229890}
   m_Layer: 0
-  m_Name: Conductor
+  m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
