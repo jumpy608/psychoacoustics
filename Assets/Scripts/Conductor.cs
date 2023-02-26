@@ -12,6 +12,7 @@ public class Conductor : MonoBehaviour
     public static Conductor instance;
     [SerializeField] TextAsset beatMap; // Text file containing beatmap
     [SerializeField] GameObject restartButton;
+    [SerializeField] string songName;
 
     // Timing variables
     private float songStartDspTime = 0f;
@@ -91,7 +92,7 @@ public class Conductor : MonoBehaviour
             yield return null;
         }
 
-        AudioManager.instance.PlaySound("Ana Ng"); // Play song
+        AudioManager.instance.PlaySound(songName); // Play song
     }
 
     // Name: CheckBeats coroutine

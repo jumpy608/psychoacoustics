@@ -157,7 +157,7 @@ RectTransform:
   m_Children:
   - {fileID: 23866913}
   m_Father: {fileID: 97003075}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1377,6 +1377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beatMap: {fileID: 4900000, guid: 136769f3b7a510446a2431a019ce540b, type: 3}
   restartButton: {fileID: 23087733}
+  songName: Ana Ng
   hitCircles:
   - {fileID: 1632822318}
   - {fileID: 1109205019}
