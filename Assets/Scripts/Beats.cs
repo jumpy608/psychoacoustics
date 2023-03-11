@@ -49,7 +49,7 @@ public class Beats : MonoBehaviour
 
             for (int i = 0; i < beatMapText.Length; i++) // Loop through beat map text
             {
-                if ((beatMapText[i] == '1') || (beatMapText[i] == '2') || (beatMapText[i] == '3') || (beatMapText[i] == '4'))
+                if ((beatMapText[i] == '1') || (beatMapText[i] == '2') || (beatMapText[i] == '3'))
                 {
                     // Create beat and add to beat list
                     int hitCircleNo = beatMapText[i] - '0'; // Convert char to int

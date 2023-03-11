@@ -21,16 +21,25 @@ public class NoteCircle : MonoBehaviour
         targetBeat = x;
     }
 
+    // Name: SetTargetPos Function
+    // Programmer: Konrad Kahnert
+    // Date: 3/11/2023
+    // Description: Sets end position of this note circle
+    public void SetTargetPos(Vector3 pos)
+    {
+        targetPos = pos;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         startPos = transform.position;
-        targetPos = new Vector2(0, -3.5f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Interpolate the position of this note circle such that the distance to the target position is based on the time until the target beat
         float t = (Controller.instance.beatsShownInAdvance - (targetBeat - Conductor.instance.GetSongPositionInBeats())) / Controller.instance.beatsShownInAdvance;
         transform.position = Vector2.Lerp(startPos, targetPos, t);
 

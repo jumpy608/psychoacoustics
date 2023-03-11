@@ -13,6 +13,7 @@ public class Conductor : MonoBehaviour
     [SerializeField] TextAsset beatMap; // Text file containing beatmap
     [SerializeField] GameObject restartButton;
     [SerializeField] string songName;
+    [SerializeField] Transform gameCanvasTrans;
 
     // Timing variables
     private float songStartDspTime = 0f;
@@ -23,7 +24,7 @@ public class Conductor : MonoBehaviour
 
     // Note ring variables
     [SerializeField] GameObject[] hitCircles;
-    [SerializeField] GameObject noteRing;
+    [SerializeField] GameObject noteCircle;
 
     // Name: Start function
     // Programmer: Konrad Kahnert
@@ -98,19 +99,20 @@ public class Conductor : MonoBehaviour
     // Name: CheckBeats coroutine
     // Programmer: Konrad Kahnert
     // Date: 11/30/2022
-    // Description: Spawns note rings
-    // Arguments: hitCircle - which hit circle to spawn this ring over, targetBeat - when the note ring should overlap the hit circle
-    void SpawnNoteRing(int hitCircle, float targetBeat)
+    // Description: Spawns a note circle
+    // Arguments: hitCircle - which hit circle to spawn this note circle over, targetBeat - when the note circle should overlap the hit circle
+    void SpawnNoteCircle(int hitCircle, float targetBeat)
     {
-        NoteRing ringInst = Instantiate(noteRing).GetComponent<NoteRing>();
-        ringInst.transform.position = hitCircles[hitCircle - 1].transform.position;
-        ringInst.SetTargetBeat(targetBeat);
+        NoteCircle noteInst = Instantiate(noteCircle, gameCanvasTrans).GetComponent<NoteCircle>();
+        noteInst.transform.position = hitCircles[hitCircle - 1].transform.position + new Vector3(0, Controller.instance.noteHeight, 0);
+        noteInst.SetTargetBeat(targetBeat);
+        noteInst.SetTargetPos(hitCircles[hitCircle - 1].transform.position);
     }
 
     // Name: CheckBeats coroutine
     // Programmer: Konrad Kahnert
     // Date: 9/23/2022
-    // Description: Checks song position to spawn note rings
+    // Description: Checks song position to spawn note circles
     IEnumerator CheckBeats()
     {
         while (true)
@@ -125,7 +127,7 @@ public class Conductor : MonoBehaviour
 
                 if (songPositionInBeats + Controller.instance.beatsShownInAdvance >= beat.time + Controller.instance.beatOffset) // Check if beat time has been reached
                 {
-                    SpawnNoteRing(beat.hitCircleNo, beat.time + Controller.instance.beatOffset);
+                    SpawnNoteCircle(beat.hitCircleNo, beat.time + Controller.instance.beatOffset);
                     nextBeatIndex++;
                 }
             }

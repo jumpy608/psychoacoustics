@@ -9,9 +9,7 @@ public class Controller : MonoBehaviour
 {
     public static Controller instance;
 
-    [SerializeField] public float ringWidth = 0.1f;
-    [SerializeField] public float ringStartRad = 3f;
-    [SerializeField] public float ringEndRad = 0.5f;
+    [SerializeField] public float noteHeight = 200; // How high above the hit circles to spawn the note circles
     [SerializeField] public float tickLength = 0.25f; // How many beats there are between each character read in
     [SerializeField] public float bpm = 133f;
     [SerializeField] public float levelStartOffset = 2f; // How long to wait in sec to start the level
