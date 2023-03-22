@@ -5,6 +5,7 @@
 // inputs.
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NoteCircle : MonoBehaviour
 {
@@ -47,5 +48,24 @@ public class NoteCircle : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    // Name: GetTargetBeat Function
+    // Programmer: Konrad Kahnert
+    // Date: 3/22/2023
+    // Description: Returns target beat
+    public float GetTargetBeat()
+    {
+        return (targetBeat);
+    }
+
+    // Name: GreyOut Function
+    // Programmer: Konrad Kahnert
+    // Date: 3/22/2023
+    // Description: Greys out image of this note circle
+    public void GreyOut()
+    {
+        Image image = GetComponent<Image>();
+        image.color = Color.grey;
     }
 }

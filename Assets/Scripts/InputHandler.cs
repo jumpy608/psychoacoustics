@@ -56,6 +56,25 @@ public class InputHandler : MonoBehaviour
                     // Miss
                     HitCounter.instance.IncMisses();
                     missed = true;
+
+                    // Get all note circles
+                    GameObject[] noteCircles;
+                    noteCircles = GameObject.FindGameObjectsWithTag("Note Circle");
+
+                    // Find note circle to grey out by finding the note circle that has the current beat the player was supposed to hit
+                    float currentBeat = beat.time + Controller.instance.beatOffset;
+
+                    foreach (GameObject x in noteCircles)
+                    {
+                        NoteCircle noteCircle = x.GetComponent<NoteCircle>();
+
+                        if (noteCircle.GetTargetBeat() == currentBeat)
+                        {
+                            // Grey out note circle
+                            noteCircle.GreyOut();
+                            break;
+                        }
+                    }
                 }
             }
         }
