@@ -13,7 +13,7 @@ public class InputHandler : MonoBehaviour
     bool missed = false; // Whether the target beat has been missed or not
 
     [SerializeField] HitMessage[] hitMessages = new HitMessage[3];
-
+    [SerializeField] HitCircle[] hitCircles = new HitCircle[3];
 
     private void Start()
     {
@@ -134,11 +134,17 @@ public class InputHandler : MonoBehaviour
         UpdateTargetBeat();
 
         // Check for key press
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             if (Input.GetKeyDown(keys[i]))
             {
                 CheckTiming(i + 1);
+                hitCircles[i].DownColor(); // Change hit circle color
+            }
+
+            if (Input.GetKeyUp(keys[i]))
+            {
+                hitCircles[i].UpColor(); // Change hit circle color
             }
         }
     }

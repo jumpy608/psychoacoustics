@@ -774,6 +774,7 @@ GameObject:
   - component: {fileID: 220829814}
   - component: {fileID: 220829816}
   - component: {fileID: 220829815}
+  - component: {fileID: 220829817}
   m_Layer: 5
   m_Name: Hit Circle (1)
   m_TagString: Untagged
@@ -814,7 +815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.11210656, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -839,6 +840,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220829813}
   m_CullTransparentMesh: 1
+--- !u!114 &220829817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220829813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33fe2eb6d0110c4b8ebe7bc2ac0cca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &283258300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1883,6 +1896,10 @@ MonoBehaviour:
   - {fileID: 907776147}
   - {fileID: 1720501281}
   - {fileID: 1117494980}
+  hitCircles:
+  - {fileID: 1143350358}
+  - {fileID: 220829817}
+  - {fileID: 1890506326}
 --- !u!114 &658229893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2461,6 +2478,7 @@ GameObject:
   - component: {fileID: 1143350355}
   - component: {fileID: 1143350357}
   - component: {fileID: 1143350356}
+  - component: {fileID: 1143350358}
   m_Layer: 5
   m_Name: Hit Circle
   m_TagString: Untagged
@@ -2501,7 +2519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.11210656, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2526,6 +2544,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143350354}
   m_CullTransparentMesh: 1
+--- !u!114 &1143350358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143350354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33fe2eb6d0110c4b8ebe7bc2ac0cca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1184019775
 GameObject:
   m_ObjectHideFlags: 0
@@ -3221,6 +3251,7 @@ GameObject:
   - component: {fileID: 1890506323}
   - component: {fileID: 1890506325}
   - component: {fileID: 1890506324}
+  - component: {fileID: 1890506326}
   m_Layer: 5
   m_Name: Hit Circle (2)
   m_TagString: Untagged
@@ -3261,7 +3292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.11210656, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3286,6 +3317,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890506322}
   m_CullTransparentMesh: 1
+--- !u!114 &1890506326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890506322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33fe2eb6d0110c4b8ebe7bc2ac0cca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1905128043
 PrefabInstance:
   m_ObjectHideFlags: 0

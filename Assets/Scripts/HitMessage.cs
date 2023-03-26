@@ -19,7 +19,6 @@ public class HitMessage : MonoBehaviour
         text = GetComponent<TextMeshProUGUI>();
     }
 
-
     public void DisplayHitText()
     {
         text.text = "Based!";
