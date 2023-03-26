@@ -56,6 +56,7 @@ public class InputHandler : MonoBehaviour
                     // Miss
                     HitCounter.instance.IncMisses();
                     missed = true;
+                    AudioManager.instance.PlaySound("Record Scratch");
 
                     // Get all note circles
                     GameObject[] noteCircles;
@@ -103,6 +104,7 @@ public class InputHandler : MonoBehaviour
                 if (missed == false)
                 {
                     HitCounter.instance.IncMisses();
+                    AudioManager.instance.PlaySound("Record Scratch");
                 }
                 else
                 {

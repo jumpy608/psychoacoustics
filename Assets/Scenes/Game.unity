@@ -1825,6 +1825,11 @@ MonoBehaviour:
     audioSource: {fileID: 0}
     loop: 0
     volume: 0.254
+  - name: Record Scratch
+    clip: {fileID: 8300000, guid: 26d338d60a07e2b4da8987334a76b39d, type: 3}
+    audioSource: {fileID: 0}
+    loop: 0
+    volume: 0.254
   gameVolume: 1
 --- !u!114 &658229890
 MonoBehaviour:
