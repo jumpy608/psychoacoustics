@@ -1,3 +1,8 @@
+// Name: Controller Class
+// Programmer: Konrad Kahnert
+// Date: 3/26/2023
+// Description: This class will display a short message that indicates whether the player hit or missed a note.
+
 using TMPro;
 using UnityEngine;
 using System.Collections;
@@ -13,6 +18,7 @@ public class HitMessage : MonoBehaviour
     {
         text = GetComponent<TextMeshProUGUI>();
     }
+
 
     public void DisplayHitText()
     {
@@ -44,6 +50,10 @@ public class HitMessage : MonoBehaviour
         StartCoroutine(Fade());
     }
 
+    // Name: Fade Function
+    // Programmer: Konrad Kahnert
+    // Date: 3/26/2023
+    // Description: Sets alpha of text to 1, then fades text out until alpha is 0.
     IEnumerator Fade()
     {
         text.color = new Color(text.color.r, text.color.g, text.color.b, 1); // Set alpha to 1
