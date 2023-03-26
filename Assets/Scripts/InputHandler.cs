@@ -12,6 +12,9 @@ public class InputHandler : MonoBehaviour
     int targetBeatIndex = 0; // Index of beat that player is currently supposed to hit
     bool missed = false; // Whether the target beat has been missed or not
 
+    [SerializeField] HitMessage[] hitMessages = new HitMessage[3];
+
+
     private void Start()
     {
         // Set instance
@@ -50,6 +53,9 @@ public class InputHandler : MonoBehaviour
                     // Hit
                     HitCounter.instance.IncHits();
                     targetBeatIndex++;
+
+                    // Display Hit Message
+                    hitMessages[beat.hitCircleNo - 1].DisplayHitText();
                 }
                 else
                 {
@@ -57,6 +63,7 @@ public class InputHandler : MonoBehaviour
                     HitCounter.instance.IncMisses();
                     missed = true;
                     AudioManager.instance.PlaySound("Record Scratch");
+                    hitMessages[beat.hitCircleNo - 1].DisplayMissText(); // Display Miss Message
 
                     // Get all note circles
                     GameObject[] noteCircles;
@@ -99,17 +106,21 @@ public class InputHandler : MonoBehaviour
 
             if (songPosition > missTime) // Check if note has been missed
             {
-                targetBeatIndex++;
-
                 if (missed == false)
                 {
                     HitCounter.instance.IncMisses();
                     AudioManager.instance.PlaySound("Record Scratch");
+
+                    // Display Miss Message
+                    int hitCircleNo = Beats.instance.GetBeatAt(targetBeatIndex).hitCircleNo;
+                    hitMessages[hitCircleNo - 1].DisplayMissText(); 
                 }
                 else
                 {
                     missed = false;
                 }
+
+                targetBeatIndex++;
             }
         }
     }
